@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <script type="text/javascript">		
+		if(window.plus) {  
+			plusReady();  
+		} else {  
+			document.addEventListener('plusready', plusReady, false);  
+		}
+		
+		function plusReady() {
+			var wgtVer = null;
+			var zxlmweb = null;
+			var osType = plus.os.name;
+			var styles = {
+				kernelRecovery:"reload"
+			};
+			
+			// var connectionStatus = plus.networkinfo.getCurrentType();
+			// if(connectionStatus == 0 || connectionStatus == 1){
+			// 	plus.navigator.closeSplashscreen()
+			// 	var noNetWorkweb = plus.webview.create('noNetWork.html', 'noNetWork');
+			// 	noNetWorkweb.setStyle({'popGesture':'false'}); 
+			// 	noNetWorkweb.show('pop-in');; // 显示窗口
+			// 	return false
+			// }
+			
+			plus.navigator.setStatusBarStyle('dark');
+			plus.navigator.setStatusBarBackground('#fff');
+			
+			// 在Android5以上设备，如果默认没有开启硬件加速，则强制设置开启
+			if(!plus.webview.defaultHardwareAccelerated()&&parseInt(plus.os.version)>=5){
+				styles.hardwareAccelerated=true;
+			}
+			
+			// var zxlmweb = plus.webview.create('http://abcmobile.njht910.cn:8671', 'main', styles);
+			// var zxlmweb = plus.webview.create('http://103.40.249.136:8671', 'main', styles);
+			// var zxlmweb = plus.webview.create('app.html', 'main', styles);
+			var zxlmweb = plus.webview.create('http://192.168.2.16:8080', 'main', styles);
+			// var zxlmweb = plus.webview.create('https://mmm.ccfox.com', 'main', styles);
+			zxlmweb.setStyle({'popGesture':'none'}); 
+			plus.webview.show(zxlmweb); // 显示窗口
+			
+			plus.key.addEventListener("backbutton", function() { //监听返回按键
+				zxlmweb.canBack(function(e) { //监听webview窗口是否可以返回  
+					if (e.canBack) { // 可以返回  
+						zxlmweb.back(); // 返回上一页面  
+					} else { // 不可以返回  
+						var signout = confirm("您确定要退出应用吗？");  
+						if (signout == true) {  
+							plus.runtime.quit(); // 退出app  
+						} else {}  
+					}  
+				});  
+			}, false);
+			
+			var flag = false
+			var timer = null
+			timer = setTimeout(function(){
+				if(flag) return
+				plus.navigator.closeSplashscreen()
+				var noNetWorkweb = plus.webview.create('noNetWork.html', 'noNetWork');
+				noNetWorkweb.setStyle({'popGesture':'false'}); 
+				zxlmweb.endPullToRefresh();
+				noNetWorkweb.show('pop-in');; // 显示窗口
+			}, 35 * 1000)
+			
+			zxlmweb.addEventListener('rendered', function(e){
+				// console.log(JSON.stringify(e))
+				setTimeout(function(){					
+					flag = true
+					plus.navigator.closeSplashscreen()
+					// plus.nativeUI.toast('下拉可刷新APP')
+					zxlmweb.endPullToRefresh();
+				}, 500)
+			}, false);
+			
+			// console.log(osType)
+			if(osType == "Android"){
+				zxlmweb.setPullToRefresh({
+						support: true, //是否开启下拉刷新
+						height: '50px',
+						range: '50px',
+						style: 'circle'
+					},  
+					function(e){
+						zxlmweb.reload()
+						clearTimeout(timer)
+						// setTimeout(function(){  
+						// 	zxlmweb.endPullToRefresh();  
+						// }, 1000);  
+					}  
+				);	
+			}
+			
+			// plus.runtime.getProperty(plus.runtime.appid,function(inf){  
+			// 	wgtVer=inf.version;  
+			// 	console.log("当前应用版本："+wgtVer);  
+			// });  
+			
+		} 
+    </script>
+</head>
+<body>
+	
+</body>
+</html>

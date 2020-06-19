@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title></title>
+    <script type="text/javascript">
+		var wgtVer = null;
+    	function plusReady() {
+			var zxlmweb = null;
+			// var connectionStatus = plus.networkinfo.getCurrentType();
+			
+			// if(connectionStatus == 0 || connectionStatus == 1){
+			// 	zxlmweb = plus.webview.create("noNetWork.html") 
+			// } else {
+				zxlmweb = plus.webview.create("https://m.zmex.co", "main") 
+				// zxlmweb = plus.webview.create("http://192.168.0.164:8080", "main") 
+				zxlmweb.setStyle({'popGesture':'none'}); 
+			// }
+			
+			zxlmweb.show(); // 显示窗口  
+			plus.key.addEventListener("backbutton", function() { //监听返回按键  
+				zxlmweb.canBack(function(e) { //监听webview窗口是否可以返回  
+					if (e.canBack) { //可以返回  
+						zxlmweb.back(); //返回上一页面  
+					} else { //不可以返回  
+						var signout = confirm("您确定要退出应用吗？");  
+						if (signout == true) {  
+							plus.runtime.quit(); //退出app  
+						} else {}  
+					}  
+				});  
+			}, false);  
+			
+			// plus.runtime.getProperty(plus.runtime.appid,function(inf){  
+			// 	wgtVer=inf.version;  
+			// 	console.log("当前应用版本："+wgtVer);  
+			// });  
+			
+			// var type = plus.os.name;
+			// if(type == "iOS") {
+			// 	plus.navigator.setStatusBarBackground("#368CBD");
+			// } else {
+			// 	plus.navigator.setStatusBarBackground("#ddd");
+			// }
+    	}  
+		
+		if(window.plus) {  
+			plusReady();  
+		} else {  
+			document.addEventListener('plusready', plusReady, false);  
+		}
+    </script>
+</head>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.noNet-img{
+				width: 300px;
+				height: 248px;
+				margin: 25vh auto 0;
+				background-image: -webkit-image-set(
+				  url("img/start_loding01@2x.png") 2x,
+				  url("img/start_loding01@3x.png") 3x
+				) no-repeat center center;
+				background: url("img/start_loding01@2x.png") no-repeat center center;
+				background-size: contain;
+			}
+			.text{
+				font-size: 40px;
+				margin: 4vh auto 72px;
+				text-align: center;
+			}
+			.restart-btn{
+				width: 300px;
+				height: 100px;
+				text-align: center;
+				line-height: 100px;
+				font-size: 40px;
+				color: #FDAF1A;
+				margin: 5vh auto 0;
+				border: 2px solid #FDAF1A;
+				border-radius:5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="noNet-img"></div>
+		<div class="text">
+			当前网络不稳定, 请尝试重新加载
+		</div>
+		<div id="restartApp" class="restart-btn" onclick="restartApp()">
+			重新加载
+		</div>
+		<script type="text/javascript">
+			function restartApp(){			
+				plus.runtime.restart();
+			}
+		</script>
+	</body>
+</html>
