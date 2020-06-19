@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.6c05fb59bcdd67bf5a633b3f40f406ab.js"
+  "precache-manifest.3949fe8bfaa837c22e381c6db27baf2f.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "zmex-h5"});

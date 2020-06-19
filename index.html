@@ -38,8 +38,8 @@
 			
 			// var zxlmweb = plus.webview.create('http://abcmobile.njht910.cn:8671', 'main', styles);
 			// var zxlmweb = plus.webview.create('http://103.40.249.136:8671', 'main', styles);
-			// var zxlmweb = plus.webview.create('app.html', 'main', styles);
-			var zxlmweb = plus.webview.create('http://192.168.2.16:8080', 'main', styles);
+			var zxlmweb = plus.webview.create('app.html', 'main', styles);
+			// var zxlmweb = plus.webview.create('http://192.168.4.126:8080', 'main', styles);
 			// var zxlmweb = plus.webview.create('https://mmm.ccfox.com', 'main', styles);
 			zxlmweb.setStyle({'popGesture':'none'}); 
 			plus.webview.show(zxlmweb); // 显示窗口
@@ -73,28 +73,33 @@
 				setTimeout(function(){					
 					flag = true
 					plus.navigator.closeSplashscreen()
-					// plus.nativeUI.toast('下拉可刷新APP')
 					zxlmweb.endPullToRefresh();
 				}, 500)
 			}, false);
 			
-			// console.log(osType)
-			if(osType == "Android"){
-				zxlmweb.setPullToRefresh({
-						support: true, //是否开启下拉刷新
-						height: '50px',
-						range: '50px',
-						style: 'circle'
-					},  
-					function(e){
-						zxlmweb.reload()
-						clearTimeout(timer)
-						// setTimeout(function(){  
-						// 	zxlmweb.endPullToRefresh();  
-						// }, 1000);  
-					}  
-				);	
-			}
+			zxlmweb.setPullToRefresh({support:true,
+				height:'50px',
+				range:'25%',
+				style:'circle',
+				// offset:'0px',
+				contentdown:{
+					caption:'下拉可以刷新'
+				},
+				contentover:{
+					caption:'释放立即刷新'
+				},
+				contentrefresh:{
+					caption:'正在刷新...'
+				}
+			},function(e){
+				plus.navigator.setStatusBarStyle('dark');
+				plus.navigator.setStatusBarBackground('#fff');
+				zxlmweb.reload()
+				setTimeout(function(){  
+					zxlmweb.endPullToRefresh();  
+				}, 800);  
+			});
+			
 			
 			// plus.runtime.getProperty(plus.runtime.appid,function(inf){  
 			// 	wgtVer=inf.version;  
